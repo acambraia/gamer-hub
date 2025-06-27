@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./game_blog_backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./game_blog_backend/src/database:/app/src/database
+      - ./game_blog_backend/src/static/uploads:/app/src/static/uploads
+    environment:
+      FLASK_ENV: development
+
+  frontend:
+    build:
+      context: ./game_blog_frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
